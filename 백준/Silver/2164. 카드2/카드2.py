@@ -1,14 +1,17 @@
 def solution(n: int) -> int:
-    left, m_i = 0, n - 1
     q = list(range(1, n + 1))
+    k = 0
 
-    while left < m_i:
-        if left % 2 == 1:
-            q.append(q[left])
-            m_i += 1
-        left += 1
+    while (l := len(q)) > 1:
+        if k == 0:
+            q = q[1::2]
+        else:
+            q = q[::2]
 
-    return q[m_i]
+        if l % 2 == 1:
+            k = (k + 1) % 2
+    
+    return q[0]
 
 
 print(solution(int(input())))
