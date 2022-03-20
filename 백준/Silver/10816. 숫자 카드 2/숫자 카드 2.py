@@ -1,17 +1,12 @@
 import sys
-from collections import defaultdict
+from collections import Counter
 input = sys.stdin.readline
 
 def solution():
     input()
-
-    save = defaultdict(int)
-    for num in input().split():
-        save[num] += 1
-    
+    counter = Counter(input().split())
     input()
-    for num in input().split():
-        print(save[num], end=' ')
+    print(' '.join(str(counter[num]) if num in counter else '0' for num in input().split()))
 
 
 solution()
