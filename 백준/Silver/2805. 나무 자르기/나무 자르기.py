@@ -7,13 +7,11 @@ def solution(n: int, m: int) -> int:
     while bottom <= top:
         mid = (bottom + top) // 2
         cut_off = sum(tree - mid if tree > mid else 0 for tree in trees)
-        if cut_off > m:
+        if cut_off >= m:
             bottom = mid + 1
-        elif cut_off < m:
-            top = mid - 1
         else:
-            return mid
-    return top
+            top = mid - 1
+    return bottom - 1
 
 
 print(solution(*map(int, input().split())))
