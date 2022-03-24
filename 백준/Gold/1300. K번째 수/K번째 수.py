@@ -3,9 +3,10 @@ def solution():
     start, end = 1, n*n
     while start <= end:
         mid = (start + end) // 2
-        cnt = 0
-        for i in range(1, min(n, mid)+1):
-            cnt += min(n, mid//i)
+        base = mid//n
+        cnt = base * n
+        for i in range(base+1, min(n, mid)+1):
+            cnt += mid//i
         
         if cnt >= k:
             end = mid - 1
