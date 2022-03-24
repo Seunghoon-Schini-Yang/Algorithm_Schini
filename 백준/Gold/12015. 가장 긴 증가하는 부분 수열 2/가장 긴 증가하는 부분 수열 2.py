@@ -1,26 +1,18 @@
 import sys
 input = sys.stdin.readline
+from bisect import bisect_left
 
-
-def solution(n: int) -> int:
+def solution() -> int:
     seq = map(int, input().split())
-    inc, inc_last_idx = [next(seq)], 0
-    for _ in range(n-1):
-        x = next(seq)
+    inc = [next(seq)]
+    for x in seq:
         if x > inc[-1]:
             inc.append(x)
-            inc_last_idx += 1
         else:
-            lo, hi = 0, inc_last_idx
-            while lo <= hi:
-                mid = (lo + hi)//2
-                if x > inc[mid]:
-                    lo = mid+1
-                else:
-                    hi = mid-1
-            inc[lo] = x
+            inc[bisect_left(inc, x)] = x
 
-    return inc_last_idx + 1
+    return len(inc)
 
 
-print(solution(int(input())))
+input()
+print(solution())
