@@ -8,6 +8,8 @@ def solution(n: int, k: int) -> int:
     for _ in range(n):
         coin = int(input())
         for i in range(coin, k+1):
+            if not dp[i-coin]:
+                continue
             dp[i] += dp[i-coin]
 
     return dp[k]
