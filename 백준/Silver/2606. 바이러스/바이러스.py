@@ -3,7 +3,6 @@ input = sys.stdin.readline
 from collections import defaultdict
 
 def sol(n: int) -> int:
-    ans = 0
     stack = ['1']
     graph = defaultdict(list)
 
@@ -16,10 +15,9 @@ def sol(n: int) -> int:
         from_stack = stack.pop()
         if from_stack in visited:
             continue
-        ans += 1
         visited.add(from_stack)
         stack.extend(graph[from_stack])
-    return ans - 1
+    return len(visited)-1
 
 
 print(sol(int(input())))
