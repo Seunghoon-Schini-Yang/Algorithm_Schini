@@ -4,9 +4,10 @@
 import sys
 input = sys.stdin.readline
 from heapq import heappop, heappush
+import math
 
 def sol(n: int, e: int) -> int:
-    INF = sys.maxsize
+    INF = math.inf
 
     graph = [[] for _ in range(n+1)]
     for _ in range(e):
@@ -51,7 +52,7 @@ def sol(n: int, e: int) -> int:
         
     
     ans = min(via1_dist[1]+via1_dist[via2]+via2_dist[n], via2_dist[1]+via1_dist[via2]+via1_dist[n])
-    return ans if ans < INF else -1
+    return -1 if math.isinf(ans) else ans
 
 
 print(sol(*map(int, input().split())))
