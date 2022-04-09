@@ -1,38 +1,47 @@
-# https://velog.io/@jajubal/%ED%8C%8C%EC%9D%B4%EC%8D%AC%EB%B0%B1%EC%A4%80-1540-%ED%8A%B9%EC%A0%95%ED%95%9C%EC%B5%9C%EB%8B%A8%EA%B2%BD%EB%A1%9C
-# 블로그에서 정답이라고 하는 코드
-# 내 생각엔 틀렸습니다 나올 것 같은데, 정답이라고 해서 확인해보려고 복붙함
-import sys; input = sys.stdin.readline
-from heapq import heappush, heappop
+import sys
+input = sys.stdin.readline
+from heapq import heappop, heappush
 
-def dijkstra(start, end):
-    dis = [0xffffff] * (N + 1)
-    dis[start] = 0
-    q = [[0, start]]
-    while q:
-        k, u = heappop(q)
-        if k > dis[u]: continue
-        for w, v in G[u]:
-            if dis[v] > dis[u] + w:
-                dis[v] = dis[u] + w
-                heappush(q, [dis[v], v])
+def sol(n: int, e: int) -> int:
+    INF = sys.maxsize
 
-    return dis[end]
+    graph = [[] for _ in range(n+1)]
+    for _ in range(e):
+        v1,v2,w = map(int, input().split())
+        graph[v1].append((w,v2))
+        graph[v2].append((w,v1))
+    
+    via1, via2 = map(int, input().split())
+    if via1>via2:
+        via1,via2 = via2,via1
 
-N, E = map(int, input().split())
-G = [[] for _ in range(N + 1)]
-for _ in range(E):
-    u, v, w = map(int, input().split())
-    G[u].append([w, v])
-    G[v].append([w, u])
+    via1_dist, via2_dist = [INF]*(n+1), [INF]*(n+1)
+    via1_dist[via1] = via2_dist[via2] = 0
 
-stop1, stop2 = map(int, input().split())
+    pq = list()
+    
+    heappush(pq, (0,via1))
+    while pq:
+        p_w,p_n = heappop(pq)
+        if via1_dist[p_n] < p_w:
+            continue
+        for c_w,c_n in graph[p_n]:
+            if p_w+c_w < via1_dist[c_n]:
+                via1_dist[c_n] = p_w+c_w
+                heappush(pq, (via1_dist[c_n], c_n))
 
-# 1 -> stop1 -> stop2 -> N
-path1 = dijkstra(1, stop1) + dijkstra(stop1, stop2) + dijkstra(stop2, N)
-# 1 -> stop2 -> stop1 -> N
-path2 = dijkstra(1, stop2) + dijkstra(stop2, stop1) + dijkstra(stop1, N)
+    heappush(pq, (0,via2))
+    while pq:
+        p_w,p_n = heappop(pq)
+        if via2_dist[p_n] < p_w:
+            continue
+        for c_w,c_n in graph[p_n]:
+            if p_w+c_w < via2_dist[c_n]:
+                via2_dist[c_n] = p_w+c_w
+                heappush(pq, (via2_dist[c_n], c_n))
+    
+    ans = min(via1_dist[1]+via1_dist[via2]+via2_dist[n], via2_dist[1]+via1_dist[via2]+via1_dist[n])
+    return ans if ans < INF else -1
 
-if path1 >= 0xffffff and path2 >= 0xffffff:
-    print(-1)
-else:
-    print(min(path1, path2))
+
+print(sol(*map(int, input().split())))
