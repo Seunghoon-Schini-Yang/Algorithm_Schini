@@ -1,3 +1,6 @@
+# 1 - n - via1 - via2 - n 의 경우처럼
+# 중간 경유 노드를 모두 지나기 전에 n 을 지나가면 안 되는줄 알음
+# 그래서 삽질.... 후....
 import sys
 input = sys.stdin.readline
 from heapq import heappop, heappush
