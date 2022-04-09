@@ -36,9 +36,16 @@ def sol(n: int, e: int) -> int:
         if via2_dist[p_n] < p_w:
             continue
         for c_w,c_n in graph[p_n]:
+            if c_n==via1:
+                continue
             if p_w+c_w < via2_dist[c_n]:
                 via2_dist[c_n] = p_w+c_w
                 heappush(pq, (via2_dist[c_n], c_n))
+    if via1_dist[1]+via1_dist[via2] < via2_dist[1]: 
+        via2_dist[1] = via1_dist[1]+via1_dist[via2]
+    if via2!=n and via1_dist[n]+via1_dist[via2] < via2_dist[n]:
+        via2_dist[n] = via1_dist[n]+via1_dist[via2]
+        
     
     ans = min(via1_dist[1]+via1_dist[via2]+via2_dist[n], via2_dist[1]+via1_dist[via2]+via1_dist[n])
     return ans if ans < INF else -1
