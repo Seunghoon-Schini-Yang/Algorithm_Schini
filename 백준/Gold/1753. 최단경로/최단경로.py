@@ -9,7 +9,6 @@ def sol(v: int, e: int, s: int) -> str:
     shortest = [INF]*(v+1)
     shortest[s] = 0
     graph = [[] for _ in range(v+1)]
-    visited = set()
 
     for _ in range(e):
         n_1,n_2,w  = map(int, input().split())
@@ -22,7 +21,7 @@ def sol(v: int, e: int, s: int) -> str:
         if w > shortest[n]:
             continue
         for c_w,c_n in graph[n]:
-            if c_n not in visited and w+c_w < shortest[c_n]:
+            if w+c_w < shortest[c_n]:
                 shortest[c_n] = w+c_w
                 heappush(heap, (shortest[c_n],c_n))
                 
