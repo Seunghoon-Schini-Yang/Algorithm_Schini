@@ -21,7 +21,7 @@ def sol(v: int, e: int, s: int) -> str:
         w,n = heappop(heap)
         visited.add(n)
         for c_w,c_n in graph[n]:
-            if w+c_w < shortest[c_n]:
+            if c_n not in visited and w+c_w < shortest[c_n]:
                 shortest[c_n] = w+c_w
                 heappush(heap, (shortest[c_n],c_n))
                 
