@@ -18,8 +18,6 @@ def sol(n: int) -> str:
             lis.append(v)
             lis_len += 1
         else:
-            if lis[cur_idx] == v:
-                continue
             lis[cur_idx] = v
 
     print(lis_len)
