@@ -12,15 +12,14 @@ def sol(n: int) -> str:
 
     for i in range(1,n):
         v = seq[i]
-        cur_idx = bisect_left(lis,v)
-        track[i] = cur_idx
-        if cur_idx == lis_len:
+        if v > lis[-1]:
             lis.append(v)
+            track[i] = lis_len
             lis_len += 1
         else:
-            if lis[cur_idx] == v:
-                continue
+            cur_idx = bisect_left(lis,v)
             lis[cur_idx] = v
+            track[i] = cur_idx
 
     print(lis_len)
 
@@ -30,10 +29,10 @@ def sol(n: int) -> str:
         if lis_len < 0:
             break
         if track[i] == lis_len:
-            path[lis_len] = str(seq[i])
+            path[lis_len] = seq[i]
             lis_len -= 1
 
-    print(' '.join(path))
+    print(*path)
 
 
 sol(int(input()))
