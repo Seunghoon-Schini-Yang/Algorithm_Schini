@@ -20,9 +20,11 @@ def sol(a: int, b: int) -> str:
             
             D = (cur*2) % 10000
             S = cur-1 if cur else 9999
-            str_cur = str(cur).rjust(4,'0')
-            L = int(str_cur[1:]+str_cur[0])
-            R = int(str_cur[-1]+str_cur[:-1])
+            L = cur%1000*10 + cur//1000
+            R = cur%10*1000 + cur//10
+            # str_cur = str(cur).rjust(4,'0')
+            # L = int(str_cur[1:]+str_cur[0])
+            # R = int(str_cur[-1]+str_cur[:-1])
             for x,char in (D,'D'),(S,'S'),(L,'L'),(R,'R'):
                 if dp[0][x] == -1:
                     dp[0][x] = cur
