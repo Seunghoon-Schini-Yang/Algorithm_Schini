@@ -4,10 +4,15 @@ from heapq import heappop, heappush
 
 def sol(n: int, m: int) -> str:
     INF = sys.maxsize
-    graph = [[] for _ in range(n+1)]
+    graph = [{} for _ in range(n+1)]
     for _ in range(m):
         a,b,c = map(int, input().split())
-        graph[a].append((c,b))
+        if b in graph[a]:
+            if c < graph[a][b]:
+                graph[a][b] = c
+            continue
+        graph[a][b] = c
+        
     start,end = map(int, input().split())
     dist = [INF] * (n+1)
     dist[start] = 0
@@ -19,7 +24,7 @@ def sol(n: int, m: int) -> str:
         if p_c > dist[p_n]:
             continue
         
-        for c_c,c_n in graph[p_n]:
+        for c_n,c_c in graph[p_n].items():
             n_c = p_c+c_c
             if n_c < dist[c_n]:
                 dist[c_n] = n_c
