@@ -17,13 +17,15 @@ def sol(v: int) -> int:
         if cnt == 1:
             q.append(p_n)
 
-    while q:
+    for _ in range(v-1):
         p_n = q.pop()
         c_n,_ = tree[p_n].popitem()
         w = tree[c_n].pop(p_n)
-        dp[c_n].append(w)
+
         if not tree[c_n]:
             return max(maxy,w)
+        
+        dp[c_n].append(w)
         if len(tree[c_n]) == 1:
             if len(dp[c_n]) > 1:
                 temp = sum(sorted(dp[c_n])[-2:])
