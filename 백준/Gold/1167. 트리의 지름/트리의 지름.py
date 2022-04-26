@@ -1,7 +1,7 @@
+# my
 import sys
 input = sys.stdin.readline
 from collections import deque
-# from itertools import combinations
 
 def sol(v: int) -> int:
     maxy = -sys.maxsize
@@ -23,15 +23,14 @@ def sol(v: int) -> int:
         c_n,_ = tree[p_n].popitem()
         w = tree[c_n].pop(p_n)
         dp[c_n].append(w)
-        if not len(tree[c_n]):
+        if not tree[c_n]:
             return max(maxy,w)
         if len(tree[c_n]) == 1:
             if len(dp[c_n]) > 1:
-                # temp = max(sum(pair) for pair in combinations(dp[c_n],2))
                 temp = sum(sorted(dp[c_n])[-2:])
                 if maxy < temp:
                     maxy = temp
-            for key in tree[c_n].keys():
+            for key in tree[c_n]:
                 cc_n = key
             temp = max(dp[c_n])
             tree[cc_n][c_n] += temp
