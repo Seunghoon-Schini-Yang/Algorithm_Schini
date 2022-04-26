@@ -1,13 +1,12 @@
 # my
 import sys
 input = sys.stdin.readline
-from collections import deque
 
 def sol(v: int) -> int:
     maxy = -sys.maxsize
     tree = [{} for _ in range(v+1)]
     dp = [[] for _ in range(v+1)]
-    q = deque()
+    q = []
     for _ in range(v):
         line = map(int, input().split())
         p_n = next(line)
@@ -19,7 +18,7 @@ def sol(v: int) -> int:
             q.append(p_n)
 
     while q:
-        p_n = q.popleft()
+        p_n = q.pop()
         c_n,_ = tree[p_n].popitem()
         w = tree[c_n].pop(p_n)
         dp[c_n].append(w)
