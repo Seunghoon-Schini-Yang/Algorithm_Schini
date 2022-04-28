@@ -1,26 +1,28 @@
 # my
+# audrjs3232 님 코드 참고
+# rank list 안 만들고, rank를 parent 음수 절대값 크기로 표현
 # disjoint set + path compression + recursive + union by rank
 import sys
 input = sys.stdin.readline
 
 def sol(n: int, m: int) -> str:
     def find(x: int) -> int:
-        if x != parent[x]:
-            parent[x] = find(parent[x])
+        if parent[x] < 0:
+            return x
+        parent[x] = find(parent[x])
         return parent[x]
 
     
     def union(x: int, y: int):
-        if rank[x] > rank[y]:
-            parent[y] = x
-        else:
+        if parent[x] > parent[y]:
             parent[x] = y
-            if rank[x] == rank[y]:
-                rank[y] += 1
+        else:
+            parent[y] = x
+            if parent[x] == parent[y]:
+                parent[x] -= 1
 
     
-    rank = [0] * (n+1)
-    parent = [i for i in range(n+1)]
+    parent = [-1] * (n+1)
     ans = list()
     for _ in range(m):
         op,a,b = map(int, input().split())
