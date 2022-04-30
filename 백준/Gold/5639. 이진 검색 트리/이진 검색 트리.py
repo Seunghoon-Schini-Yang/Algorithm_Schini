@@ -5,7 +5,7 @@ sys.setrecursionlimit(pow(10,9))
 def sol(lines: str) -> list:
     def get_post(s: int, e: int) -> None:
         if s > e:
-            return []
+            return
         
         root = pre[s]
         larger = e+1
@@ -14,13 +14,16 @@ def sol(lines: str) -> list:
                 larger = i
                 break
         
-
-        return get_post(s+1, larger-1) + get_post(larger, e) + [root]
+        get_post(s+1, larger-1)
+        get_post(larger, e)
+        post.append(root)
 
 
     pre = list(map(int, lines))
     n = len(pre)
-    return get_post(0, n-1)
+    post = []
+    get_post(0, n-1)
+    return post
 
 
 print(*sol(input()))
