@@ -7,31 +7,33 @@ def sol(n: int, k: int) -> int:
         return n-k
     
     miny = sys.maxsize
-    visited = dict()
-    visited[n] = False
-    q = deque([(0,n)])
+    dist = dict()
+    d = dist[n] = 1
+    q = deque([n])
 
     while q:
-        d,p = q.pop()
-        if miny <= d:
-            return miny
-        if p == k:
-            return d
+        p = q.pop()
+        d = dist[p]
 
-        if visited.get(p*2, True):
-            visited[p*2] = False
+        if miny <= d:
+            return miny-1
+        if p == k:
+            return dist[p] - 1
+
+        if not dist.get(p*2, False):
+            dist[p*2] = d
             if p*2 < k:
-                q.append((d,p*2))
+                q.append(p*2)
             elif d + p*2 - k < miny:
                 miny = d + p*2 - k
         
-        if 0 <= p-1 and visited.get(p-1, True):
-            visited[p-1] = False
-            q.appendleft((d+1,p-1))
+        if 0 <= p-1 and not dist.get(p-1, False):
+            dist[p-1] = d+1
+            q.appendleft(p-1)
 
-        if visited.get(p+1, True):
-            visited[p+1] = False
-            q.appendleft((d+1,p+1))
+        if not dist.get(p+1, False):
+            dist[p+1] = d+1
+            q.appendleft(p+1)
 
 
 print(sol(*map(int, input().split())))
