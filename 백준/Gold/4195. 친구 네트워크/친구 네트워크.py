@@ -17,7 +17,7 @@ def sol(f: int) -> str:
     def union(x: str, y: str) -> str:
         x_r,y_r = find(x),find(y)
         if x_r == y_r:
-            return str(nof.get(x_r, 1))
+            return str(nof[x_r])
             
         cur = nof.get(x_r, 1) + nof.get(y_r, 1)
         if ps[x_r] < ps[y_r]:
