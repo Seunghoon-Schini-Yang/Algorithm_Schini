@@ -17,9 +17,9 @@ def sol(n: int, m: int) -> str:
         if parent[x] > parent[y]:
             parent[x] = y
         else:
-            parent[y] = x
             if parent[x] == parent[y]:
                 parent[x] -= 1
+            parent[y] = x
 
     
     parent = [-1] * (n+1)
