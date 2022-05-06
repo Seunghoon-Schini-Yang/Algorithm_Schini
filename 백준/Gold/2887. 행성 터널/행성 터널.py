@@ -1,49 +1,52 @@
 import sys
 input = sys.stdin.readline
-from heapq import heappush, heappop
 
 
 def sol(n: int) -> int:
-    INF = sys.maxsize
+    def find(v: int) -> int:
+        if rs[v] < 0:
+            return v
+        rs[v] = find(rs[v])
+        return rs[v]
+
+
+    def union(w: int, v1: int, v2: int) -> int:
+        r1,r2 = find(v1),find(v2)
+        if r1 == r2:
+            return 0
+
+        if rs[r1] < rs[r2]:
+            rs[r2] = r1
+        else:
+            if rs[r1] == rs[r2]:
+                rs[r2] -= 1
+            rs[r1] = r2
+        return w
+
+    
+    rs = [-1] * n
     locs = [0] * n
-    edges = [[] for _ in range(n)]
-    visited = [0] * n
-    dist = [INF] * n
-    dist[0] = 0
-    pq = [(0,0)]
-    w_sum = 0
+    edges = [0] * (3*(n-1))
+    k = 0
 
     for i in range(n):
         locs[i] = (*map(int, input().split()), i)
-    
+
     xyz = zip(sorted(locs), sorted(locs, key=lambda x: x[1]), sorted(locs, key=lambda x: x[2]))
     (pxw,_,_,pxn), (_,pyw,_,pyn), (_,_,pzw,pzn) = next(xyz)
-    
+
     for _ in range(n-1):
         (cxw,_,_,cxn), (_,cyw,_,cyn), (_,_,czw,czn) = next(xyz)
-        edges[pxn].append((abs(cxw-pxw), cxn))
-        edges[cxn].append((abs(cxw-pxw), pxn))
-        edges[pyn].append((abs(cyw-pyw), cyn))
-        edges[cyn].append((abs(cyw-pyw), pyn))
-        edges[pzn].append((abs(czw-pzw), czn))
-        edges[czn].append((abs(czw-pzw), pzn))
+        edges[k] = (abs(cxw-pxw), pxn, cxn)
+        k += 1
+        edges[k] = (abs(cyw-pyw), pyn, cyn)
+        k += 1
+        edges[k] = (abs(czw-pzw), pzn, czn)
+        k += 1
         pxw,pxn,pyw,pyn,pzw,pzn = cxw,cxn,cyw,cyn,czw,czn
+    edges.sort()
 
-    while pq:
-        p_w,p_n = heappop(pq)
-        if p_w > dist[p_n]:
-            continue
-
-        visited[p_n] = 1
-        w_sum += p_w
-
-        for c_w,c_n in edges[p_n]:
-            if visited[c_n] or c_w >= dist[c_n]:
-                continue
-            heappush(pq, (c_w,c_n))
-            dist[c_n] = c_w
-
-    return w_sum
+    return sum(union(w,v1,v2) for w,v1,v2 in edges)
 
 
 print(sol(int(input())))
