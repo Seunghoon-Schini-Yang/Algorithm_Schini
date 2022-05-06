@@ -1,5 +1,6 @@
 import sys
 input = sys.stdin.readline
+from math import sqrt
 
 
 def sol(n: int, m: int) -> float:
@@ -32,7 +33,7 @@ def sol(n: int, m: int) -> float:
     for i in range(1, n+1):
         locs[i] = tuple(map(float, input().split()))
         for j in range(1, i):
-            edges[k] = (pow(pow(locs[i][0]-locs[j][0], 2)+pow(locs[i][1]-locs[j][1], 2), 0.5), j,i)
+            edges[k] = (sqrt(pow(locs[i][0]-locs[j][0], 2)+pow(locs[i][1]-locs[j][1], 2)), j,i)
             k += 1
     
     for _ in range(m):
