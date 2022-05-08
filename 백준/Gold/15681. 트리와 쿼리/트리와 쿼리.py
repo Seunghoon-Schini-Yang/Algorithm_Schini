@@ -11,12 +11,12 @@ def sol(n: int, r: int, q: int) -> str:
             if c_v != p:
                 c_sum += (make_tree(c_v, v) + 1)
 
-        subtree_dp[v] = c_sum+1
+        subtree_dp[v] += c_sum
         return c_sum
 
     
     tree = [[] for _ in range(n+1)]
-    subtree_dp = [0] * (n+1)
+    subtree_dp = [1] * (n+1)
     for _ in range(n-1):
         v1,v2 = map(int, input().split())
         tree[v1].append(v2)
