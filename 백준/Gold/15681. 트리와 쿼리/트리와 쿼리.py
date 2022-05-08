@@ -1,4 +1,3 @@
-# my
 # dp + recursive
 import sys
 input = sys.stdin.readline
@@ -10,8 +9,7 @@ def sol(n: int, r: int, q: int) -> str:
         c_sum = 0
         for c_v in tree[v]:
             if c_v != p:
-                c_sum += 1
-                c_sum += make_tree(c_v, v)
+                c_sum += (make_tree(c_v, v) + 1)
 
         subtree_dp[v] = c_sum+1
         return c_sum
