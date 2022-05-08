@@ -1,0 +1,19 @@
+def solution(n, left, right):
+    ans = list()
+    li,lj = divmod(left, n)
+    if left == right:
+        return [1+max(li,lj)]
+    ri,rj = divmod(right, n)
+
+    if li == ri:
+        return [1+max(li, j) for j in range(lj, rj+1)]
+
+    for j in range(lj, n):
+        ans.append(1+max(li, j))
+    for i in range(li+1, ri):
+        for j in range(n):
+            ans.append(1+max(i,j))
+    for j in range(rj+1):
+        ans.append(1+max(ri, j))
+    
+    return ans
