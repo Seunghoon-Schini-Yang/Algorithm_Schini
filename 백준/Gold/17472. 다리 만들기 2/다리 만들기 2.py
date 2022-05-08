@@ -1,4 +1,3 @@
-# dfs + mst (kruskal)
 import sys
 input = sys.stdin.readline
 
@@ -25,6 +24,44 @@ def sol(n: int, m: int) -> int:
         return w
 
 
+    def dfs(i: int, j: int) -> None:
+        stack = [(i,j)]
+        visited[i][j] = 1
+        while stack:
+            x,y = stack.pop()
+            locs[x][y] = land_cnt
+            for cx,cy in zip((x+1,x-1,x,x), (y,y,y+1,y-1)):
+                if 0 <= cx < n and 0 <= cy < m:
+                    if not locs[cx][cy] or visited[cx][cy]:
+                        continue
+                    stack.append((cx,cy))
+                    visited[cx][cy] = 1
+
+
+    def get_edge(i: int, j: int) -> None:
+        p_land = locs[i][j]
+        if j < m-3:
+            hz = j+1
+            while hz < m and not locs[i][hz]:
+                hz += 1
+            if j+2 < hz < m and locs[i][hz] != p_land:
+                c_land = locs[i][hz]
+                w = hz-j-1
+                if w < edges[p_land][c_land]:
+                    edges[p_land][c_land] = w
+                    edges[c_land][p_land] = w
+        if i < n-3:
+            vt = i+1
+            while vt < n and not locs[vt][j]:
+                vt += 1
+            if i+2 < vt < n and locs[vt][j] != p_land:
+                c_land = locs[vt][j]
+                w = vt-i-1
+                if w < edges[p_land][c_land]:
+                    edges[p_land][c_land] = w
+                    edges[c_land][p_land] = w
+    
+
     locs = [list(map(int, input().split())) for _ in range(n)]
     visited = [[0] * m for _ in range(n)]
     land_cnt = 1
@@ -32,44 +69,14 @@ def sol(n: int, m: int) -> int:
         for j in range(m):
             if not locs[i][j] or visited[i][j]:
                 continue
-            stack = [(i,j)]
-            visited[i][j] = 1
-            while stack:
-                x,y = stack.pop()
-                locs[x][y] = land_cnt
-                for cx,cy in zip((x+1,x-1,x,x), (y,y,y+1,y-1)):
-                    if 0 <= cx < n and 0 <= cy < m:
-                        if not locs[cx][cy] or visited[cx][cy]:
-                            continue
-                        stack.append((cx,cy))
-                        visited[cx][cy] = 1
+            dfs(i, j)
             land_cnt += 1
 
     edges = [[10] * land_cnt for _ in range(land_cnt)]
     for i in range(n):
         for j in range(m):
             if locs[i][j]:
-                p_land = locs[i][j]
-                if j < m-3:
-                    hz = j+1
-                    while hz < m and not locs[i][hz]:
-                        hz += 1
-                    if j+2 < hz < m and locs[i][hz] != p_land:
-                        c_land = locs[i][hz]
-                        w = hz-j-1
-                        if w < edges[p_land][c_land]:
-                            edges[p_land][c_land] = w
-                            edges[c_land][p_land] = w
-                if i < n-3:
-                    vt = i+1
-                    while vt < n and not locs[vt][j]:
-                        vt += 1
-                    if i+2 < vt < n and locs[vt][j] != p_land:
-                        c_land = locs[vt][j]
-                        w = vt-i-1
-                        if w < edges[p_land][c_land]:
-                            edges[p_land][c_land] = w
-                            edges[c_land][p_land] = w
+                get_edge(i, j)
 
     edges_flat = []
     for i in range(2, land_cnt):
