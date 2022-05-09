@@ -26,7 +26,7 @@ def sol(n: int) -> int:
 
         dp[c_node][:] = is_c_w, not_c_w
 
-        return (is_c_path, not_c_path)
+        return is_c_path, not_c_path
 
     
     dp = [[0,0] for _ in range(n+1)]
