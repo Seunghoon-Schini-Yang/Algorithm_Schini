@@ -1,24 +1,17 @@
 import sys
-input = sys.stdin.readline
+input_ = sys.stdin.read
 
 
-def sol(n: int, m: int) -> str:
-    both = list()
-    add_both = both.append
-    if n > m:
-        never_heard = iter(input().rstrip() for _ in range(n))
-        never_seen = {input().rstrip() for _ in range(m)}
-        for name in never_heard:
-            if name in never_seen:
-                add_both(name)
-    else:
-        never_heard = {input().rstrip() for _ in range(n)}
-        for _ in range(m):
-            if (name := input().rstrip()) in never_heard:
-                add_both(name)
+def sol(n: int, m: int) -> None:
+    I = input_().splitlines()
+    never_heard = set(I[:n])
+    never_seen = set(I[n:])
+
+    both = sorted(never_heard.intersection(never_seen))
 
     print(len(both))
-    return '\n'.join(sorted(both))
+    for name in both:
+        print(name)
 
 
-print(sol(*map(int, input().split())))
+sol(*map(int, input().split()))
