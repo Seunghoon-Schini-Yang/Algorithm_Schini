@@ -4,8 +4,6 @@ input = sys.stdin.readline
 
 def sol(n: int) -> None:
     s = set()
-    # s_rm = s.discard; s_add = s.add
-    # s_clr = s.clear; s_update = s.update
     for _ in range(n):
         query = input().split()
         
@@ -13,7 +11,7 @@ def sol(n: int) -> None:
             if query[0][1] == 'd':
                 s.add(int(query[1]))
             else:
-                s.clear(); s.update(range(1, 21))
+                s = set(range(1, 21))
         elif query[0][0] == 'r':
             s.discard(int(query[1]))
         elif query[0][0] == 'c':
