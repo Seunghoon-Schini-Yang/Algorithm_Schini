@@ -9,18 +9,18 @@ def sol(n: int) -> None:
     full = [1] * 21
     
     for _ in range(n):
-        query, *x = input().split()
+        query = input().split()
         
-        if query == 'add':
-            bitmask[int(x[0])] = 1
-        elif query == 'all':
+        if query[0] == 'add':
+            bitmask[int(query[1])] = 1
+        elif query[0] == 'all':
             bitmask[:] = full
-        elif query == 'remove':
-            bitmask[int(x[0])] &= 0
-        elif query == 'check':
-            print('1\n' if bitmask[int(x[0])] else '0\n')
-        elif query == 'toggle':
-            bitmask[int(x[0])] ^= 1
+        elif query[0] == 'remove':
+            bitmask[int(query[1])] &= 0
+        elif query[0] == 'check':
+            print('1\n' if bitmask[int(query[1])] else '0\n')
+        elif query[0] == 'toggle':
+            bitmask[int(query[1])] ^= 1
         else:
             bitmask[:] = empty
 
