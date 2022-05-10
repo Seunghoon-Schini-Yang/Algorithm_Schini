@@ -1,26 +1,28 @@
 import sys
 input = sys.stdin.readline
+print = sys.stdout.write
 
 
 def sol(n: int) -> None:
-    s = set()
+    bitmask = [0] * 21
+    empty = [0] * 21
+    full = [1] * 21
+    
     for _ in range(n):
-        query = input().split()
+        query, *x = input().split()
         
-        if query[0][0] == 'a':
-            if query[0][1] == 'd':
-                s.add(int(query[1]))
-            else:
-                s = set(range(1, 21))
-        elif query[0][0] == 'r':
-            s.discard(int(query[1]))
-        elif query[0][0] == 'c':
-            print(1 if int(query[1]) in s else 0)
-        elif query[0][0] == 't':
-            x = int(query[1])
-            s.discard(x) if x in s else s.add(x)
+        if query == 'add':
+            bitmask[int(x[0])] = 1
+        elif query == 'all':
+            bitmask[:] = full
+        elif query == 'remove':
+            bitmask[int(x[0])] &= 0
+        elif query == 'check':
+            print('1\n' if bitmask[int(x[0])] else '0\n')
+        elif query == 'toggle':
+            bitmask[int(x[0])] ^= 1
         else:
-            s.clear()
+            bitmask[:] = empty
 
 
 sol(int(input()))
