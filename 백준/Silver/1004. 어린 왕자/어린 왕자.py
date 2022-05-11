@@ -1,6 +1,7 @@
 import sys
 from math import sqrt
 input = sys.stdin.readline
+print = sys.stdout.write
 
 
 def sol(xs: int, ys: int, xe: int, ye: int) -> str:
@@ -8,7 +9,7 @@ def sol(xs: int, ys: int, xe: int, ye: int) -> str:
     for _ in range(int(input())):
         cx, cy, r = map(int, input().split())
         cnt += (r > sqrt((cx-xs)**2 + (cy-ys)**2)) ^ (r > sqrt((cx-xe)**2 + (cy-ye)**2))
-    return str(cnt)
+    return str(cnt) + '\n'
 
-
-print('\n'.join(sol(*map(int, input().split())) for _ in range(int(input()))))
+for _ in range(int(input())):
+    print(sol(*map(int, input().split())))
