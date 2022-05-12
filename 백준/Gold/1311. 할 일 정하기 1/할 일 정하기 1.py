@@ -10,7 +10,9 @@ def sol(n: int) -> int:
         if dp[mask] < INF:
             return dp[mask]
         
-        dp[mask] = min(INF if mask & (1 << i) else dfs(k+1, mask | (1 << i)) + w[k][i] for i in range(n))
+        for i in range(n):
+            if not mask & (1 << i):
+                dp[mask] = min(dp[mask], dfs(k+1, mask | (1 << i)) + w[k][i])
 
         return dp[mask]
 
