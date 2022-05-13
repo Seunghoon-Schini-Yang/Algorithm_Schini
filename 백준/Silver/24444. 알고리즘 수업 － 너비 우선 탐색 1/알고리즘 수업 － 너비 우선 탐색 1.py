@@ -9,23 +9,21 @@ def sol(n: int, m: int, r: int) -> str:
         v1,v2 = map(int, input().split())
         adjs[v1].append(v2)
         adjs[v2].append(v1)
-    for adj in adjs:
+    for adj in adjs[1:]:
         adj.sort()
     
-    order = 1
     que = [r]
-    
+    visited[r] = 1
+    order = 2
+
     while que:
         temp = list()
-
+        
         for p_v in que:
-            if visited[p_v]:
-                continue
-            visited[p_v] = order
-            order += 1
-
             for c_v in adjs[p_v]:
                 if not visited[c_v]:
+                    visited[c_v] = order
+                    order += 1
                     temp.append(c_v)
 
         que = temp
