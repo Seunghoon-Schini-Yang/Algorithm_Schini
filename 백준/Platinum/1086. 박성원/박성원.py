@@ -1,4 +1,4 @@
-import sys
+import sys, math
 input = sys.stdin.readline
 
 
@@ -41,18 +41,19 @@ def sol(n: int) -> str:
 
     dfs(0, tot_len)
     numer = memo[0][0]
-    denom = sum(memo[0])
+    denom = math.factorial(n)
     if not numer:
         return '0/1'
     else:
-        gcd = get_gcd(numer, denom)
+        gcd = math.gcd(numer, denom)
         return f'{numer//gcd}/{denom//gcd}'
 
-
+'''
 def get_gcd(x: int, y: int) -> int:
     if not y % x:
         return x
     return get_gcd(y % x, x)
+'''
 
 
 print(sol(int(input())))
