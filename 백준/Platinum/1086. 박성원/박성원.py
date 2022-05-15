@@ -3,29 +3,30 @@ input = sys.stdin.readline
 
 
 def sol(n: int) -> str:
-    def dfs(mask: int, n_len: int) -> dict:
-        if not n_len:
-            return {0: 1}
-        if memo[mask]:
-            return memo[mask]
+    def dfs(mask: int, n_len: int) -> None:
+        if not n_len or visited[mask]:
+            return
 
+        visited[mask] = 1
         for i in range(n):
             if not mask&(1<<i):
                 rem = modulo(arr[i].ljust(n_len, '0'))
-                for k,v in dfs(mask|(1<<i), n_len-len(arr[i])).items():
-                    memo[mask][(rem+k)%dvr] = v + memo[mask].get((rem+k)%dvr, 0)
-        return memo[mask]
+                c_mask = mask|(1<<i)
+                dfs(c_mask, n_len-len(arr[i]))
+                for j in range(k):
+                    if memo[c_mask][j]:
+                        memo[mask][(rem+j)%k] += memo[c_mask][j]
 
 
     def modulo(n: str) -> int:
         n_len = len(n)
         while n_len >= 3:
-            n = str(int(n[:3]) % dvr) + n[3:]
+            n = str(int(n[:3]) % k) + n[3:]
             n_len = len(n)
         n = int(n)
 
-        if n >= dvr:
-            n %= dvr
+        if n >= k:
+            n %= k
         return n
     
 
@@ -33,12 +34,14 @@ def sol(n: int) -> str:
     tot_len = 0
     for num in arr:
         tot_len += len(num)
-    dvr = int(input())
-    memo = [{} for _ in range(1<<n)]
+    k = int(input())
+    memo = [[0] * k for _ in range(1<<n)]
+    memo[(1<<n)-1][0] = 1
+    visited = [0] * (1<<n)
 
-    result = dfs(0, tot_len)
-    numer = result.get(0, 0)
-    denom = sum(result.values())
+    dfs(0, tot_len)
+    numer = memo[0][0]
+    denom = sum(memo[0])
     if not numer:
         return '0/1'
     else:
