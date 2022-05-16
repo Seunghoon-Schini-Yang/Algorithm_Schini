@@ -1,8 +1,8 @@
-from math import factorial
+from math import comb
 
 
 def sol(n: int, k: int) -> int:
-    return factorial(n) // (factorial(k) * factorial(n-k))
+    return comb(n, k)
 
 
 print(sol(*map(int, input().split())))
