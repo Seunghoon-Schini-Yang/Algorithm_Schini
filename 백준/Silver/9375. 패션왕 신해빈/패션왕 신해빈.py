@@ -8,16 +8,15 @@ def sol(t: int) -> str:
 
 
 def numofcases(n: int) -> int:
+    if not n:
+        return 0
+    
     bucket = dict()
     for _ in range(n):
         key = input().split()[1]
         bucket[key] = bucket.get(key, 1) + 1
-        
-    ans = 1
-    for val in bucket.values():
-        ans *= val
 
-    return ans - 1
+    return reduce((lambda x,y: x*y), bucket.values()) - 1
 
 
 print(sol(int(input())))
