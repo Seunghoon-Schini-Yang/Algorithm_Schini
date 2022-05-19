@@ -1,5 +1,7 @@
 import sys
 input = sys.stdin.readline
+print = sys.stdout.write
+
 
 def solution(n: int) -> None:
     nums = [0] + list(map(int, input().split()))
@@ -10,10 +12,10 @@ def solution(n: int) -> None:
     for _ in range(m):
         s, e = map(int, input().split())
         if s > dp[s+e][0]:
-            print(1)
+            print('1\n')
             continue
         if dp[s+e][1]:
-            print(0)
+            print('0\n')
             continue
             
         else:
@@ -30,10 +32,10 @@ def solution(n: int) -> None:
                 else:
                     dp[s+e][1] = 1
                     flag = 0
-                    print(0)
+                    print('0\n')
                     break
             if flag:
-                print(1)
+                print('1\n')
 
 
 solution(int(input()))
