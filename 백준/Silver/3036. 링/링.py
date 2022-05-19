@@ -12,9 +12,9 @@ def sol() -> None:
 
 
 def gcd(a: int, b: int) -> int:
-    if not a%b:
-        return b
-    return gcd(b, a%b)
+    if b:
+        return gcd(b, a%b)
+    return a
 
 
 input()
