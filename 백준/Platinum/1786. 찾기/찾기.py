@@ -41,7 +41,7 @@ def sol(t: str, p: str) -> None:
                 j = lps[j-1]
 
     print(len(idx))
-    print(' '.join(map(str, idx)))
+    sys.stdout.write(' '.join(map(str, idx)))
 
 
 sol(input().rstrip(), input().rstrip())
