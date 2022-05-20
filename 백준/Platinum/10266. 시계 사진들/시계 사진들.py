@@ -6,12 +6,14 @@ input = sys.stdin.readline
 def sol(n: int) -> str:
     def get_diff_arr(angles: str) -> list:
         angles = sorted(map(int, angles.split()))
-        # diff = [angles[i]-angles[i-1] for i in range(1, n)]
-        diff = [0] * n
-        for i in range(n-1):
-            diff[i] = angles[i+1] - angles[i]
-        diff[-1] = angles[0] + 360_000 - angles[-1]
-        return diff
+        # diff = [0] * n
+        # for i in range(n-1):
+        #     diff[i] = angles[i+1] - angles[i]
+        # diff[-1] = angles[0] + 360_000 - angles[-1]
+        # return diff
+
+        # jnooree 님 코드 참고
+        return [x-y for x,y in zip(angles[1:] + [angles[0] + 360_000], angles)]
 
 
     def failure_fuc() -> list:
@@ -51,7 +53,6 @@ def sol(n: int) -> str:
     t = t + t[:-1]
     p = get_diff_arr(input())
     lps = failure_fuc()
-
     return kmp()
 
 
