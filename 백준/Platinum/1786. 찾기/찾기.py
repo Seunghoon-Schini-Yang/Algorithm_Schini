@@ -24,17 +24,17 @@ def sol(t: str, p: str) -> None:
     # find p in t
     i = j = 0
     while i < t_len:
-        if j == p_len:
-            cnt += 1
-            idx.append(i-p_len+1)
-            j = lps[j-1]
-        elif p[j] != t[i]:
+        if p[j] != t[i]:
             if not j:
                 i += 1
             else:
                 j = lps[j-1]
         else:
             i += 1; j += 1
+            if j == p_len:
+                cnt += 1
+                idx.append(i-p_len+1)
+                j = lps[j-1]
 
     if j == p_len:
         cnt += 1
