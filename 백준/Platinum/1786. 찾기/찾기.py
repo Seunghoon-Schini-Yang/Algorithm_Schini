@@ -1,3 +1,7 @@
+import sys
+input = sys.stdin.readline
+
+
 def sol(t: str, p: str) -> None:
     p_len = len(p); t_len = len(t)
     if p_len > t_len:
@@ -36,12 +40,8 @@ def sol(t: str, p: str) -> None:
                 idx.append(i-p_len+1)
                 j = lps[j-1]
 
-    if j == p_len:
-        cnt += 1
-        idx.append(i-p_len+1)
-
     print(len(idx))
     print(*idx)
 
 
-sol(input(), input())
+sol(input().rstrip(), input().rstrip())
