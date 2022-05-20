@@ -1,6 +1,6 @@
 import sys
 input = sys.stdin.readline
-# print = sys.stdout.write
+print = sys.stdout.write
 
 
 def sol() -> None:
@@ -11,7 +11,7 @@ def sol() -> None:
         s_len = len(s)
         
         quot,rem = divmod(s_len, s_len - lps(s, s_len))
-        print(1 if rem else quot)
+        print('1\n' if rem else str(quot)+'\n')
 
 
 def lps(s: str, s_len: int) -> int:
