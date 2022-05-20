@@ -4,8 +4,7 @@ input = sys.stdin.readline
 
 
 def sol(n: int) -> str:
-    t = get_diff_arr(input())
-    t = t + t[:-1]
+    t = get_diff_arr(input()) * 2
     p = get_diff_arr(input())
     lps = failure_fuc(n, p)
     return 'possible' if kmp(n, p, t, lps)  else 'impossible'
@@ -37,7 +36,7 @@ def failure_fuc(n: int, p: list) -> list:
 
 def kmp(n: int, p: list, t: list, lps: list) -> bool:
     j = i = 0
-    while i < 2*n - 1:
+    while i < 2*n:
         if p[j] == t[i]:
             j += 1; i += 1
             if j == n:
