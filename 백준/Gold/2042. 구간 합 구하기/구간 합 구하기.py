@@ -6,8 +6,7 @@ print = sys.stdout.write
 
 def sol(n: int, m: int, k: int) -> None:
     tree = [0] * (2*n + 1)
-    for i in range(n+1, 2*n+1):
-        tree[i] = int(input())
+    tree[n+1:] = [int(input()) for _ in range(n)]
     for i in range(2*n, 1, -1):
         tree[i>>1] += tree[i]
 
