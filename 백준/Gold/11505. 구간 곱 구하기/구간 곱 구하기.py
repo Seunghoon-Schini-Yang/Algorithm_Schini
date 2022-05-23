@@ -10,7 +10,7 @@ def sol(n: int, m: int, k: int) -> None:
     tree = [0] * (2*n)
     tree[n:] = [int(input()) for _ in range(n)]
     for i in range(n-1, 0, -1):
-        tree[i] = tree[i<<1]%rem * tree[i<<1|1]%rem
+        tree[i] = (tree[i<<1] * tree[i<<1|1]) % rem
 
     for _ in range(m+k):
         a,b,c = map(int, input().split())
@@ -25,7 +25,7 @@ def update_tree(tree: list, idx: int, val: int) -> None:
     tree[idx] = val
     idx >>= 1
     while idx:
-        tree[idx] = tree[idx<<1]%rem * tree[idx<<1|1]%rem
+        tree[idx] = (tree[idx<<1] * tree[idx<<1|1]) % rem
         idx >>= 1
     return
 
