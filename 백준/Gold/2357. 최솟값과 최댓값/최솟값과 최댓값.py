@@ -15,22 +15,24 @@ def sol(n: int, m: int) -> None:
 
     for _ in range(m):
         a,b = map(int, input().split())
-        print(f'{partial_minmax(tree_min, n+a-1, n+b, False)} {partial_minmax(tree_max, n+a-1, n+b, True)}\n')
+        partial_minmax(tree_max, tree_min, n+a-1, n+b)
     return
 
 
-def partial_minmax(tree, s: int, e: int, is_max: bool) -> int:
-    f = max if is_max else min
-    res = 1 if is_max else 1_000_000_000
+def partial_minmax(tree_max: list, tree_min: list, s: int, e: int) -> None:
+    maxy = 1; miny = 1_000_000_000
     while s < e:
         if s&1:
-            res = f(res, tree[s])
+            maxy = max(maxy, tree_max[s])
+            miny = min(miny, tree_min[s])
             s += 1
         if e&1:
             e ^= 1
-            res = f(res, tree[e])
+            maxy = max(maxy, tree_max[e])
+            miny = min(miny, tree_min[e])
         s >>= 1; e >>= 1
-    return res
+    print(f'{miny} {maxy}\n')
+    return
 
 
 sol(*map(int, input().split()))
