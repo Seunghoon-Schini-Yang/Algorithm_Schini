@@ -12,26 +12,27 @@ def merge(n: int, arr: list) -> list:
         return arr
     
     global cnt
-    front = merge(n>>1, arr[:n>>1])
-    back = merge((n>>1)+(n&1), arr[n>>1:])
+    f_len, b_len = n>>1, (n>>1)+(n&1)
+    front = merge(f_len, arr[:n>>1])
+    back = merge(b_len, arr[n>>1:])
 
     arr = [0]*n
     f_i = 0
-    for b_i in range((n>>1)+(n&1)):
-        while f_i < n>>1 and front[f_i] <= back[b_i]:
+    for b_i in range(b_len):
+        while f_i < f_len and front[f_i] <= back[b_i]:
             arr[f_i+b_i] = front[f_i]
             f_i += 1
         arr[f_i+b_i] = back[b_i]
-        cnt += (n>>1) - f_i
-        if f_i == n>>1:
+        cnt += f_len - f_i
+        if f_i == f_len:
             break
     
     b_i += 1
-    while b_i < (n>>1)+(n&1):
+    while b_i < b_len:
         arr[f_i+b_i] = back[b_i]
         b_i += 1
 
-    while f_i < n>>1:
+    while f_i < f_len:
         arr[f_i+b_i] = front[f_i]
         f_i += 1
 
