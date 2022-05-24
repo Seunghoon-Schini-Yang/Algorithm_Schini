@@ -1,4 +1,6 @@
 # merge sort
+import sys
+input = sys.stdin.readline
 cnt = 0
 
 
