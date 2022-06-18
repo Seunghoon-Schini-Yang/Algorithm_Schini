@@ -24,8 +24,9 @@ def bfs(row: int, col: int) -> tuple:
             for cr, cc in adjs(row, col):
                 if 0<=cr<n and 0<=cc<n and not visited[cr][cc] and sea[cr][cc] <= size:
                     visited[cr][cc] = True
-                    temp.append((cr, cc))
-                    if 0 < sea[cr][cc] < size:
+                    if not sea[cr][cc] or sea[cr][cc] == size:
+                        temp.append((cr, cc))
+                    else:
                         candidate.append((cr, cc))
         
         if candidate:
