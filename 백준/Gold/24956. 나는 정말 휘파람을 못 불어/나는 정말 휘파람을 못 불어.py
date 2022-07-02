@@ -5,15 +5,13 @@ input = sys.stdin.readline
 if __name__ == '__main__':
     input()
     mod = 1_000_000_007
-    memo = [0]*4
+    w = h = e1 = e2 = 0
     for char in input().rstrip():
         if char == 'W':
-            memo[0] += 1
+            w += 1
         elif char == 'H':
-            memo[1] += memo[0]
+            h += w
         elif char == 'E':
-            memo[3] += sum(memo[2:])
-            memo[3] %= mod
-            memo[2] += memo[1]
-            memo[2] %= mod
-    print(memo[3])
+            e2 = (e2*2 + e1) % mod
+            e1 = (e1+h) % mod
+    print(e2)
