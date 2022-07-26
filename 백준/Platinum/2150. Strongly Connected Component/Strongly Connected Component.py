@@ -3,51 +3,54 @@ sys.setrecursionlimit(pow(10, 9))
 input = sys.stdin.readline
 
 
-def dfs(node: int) -> None:
-    is_visited[node] = True
-    for c_n in graph[node]:
-        if is_visited[c_n]:
-            continue
-        dfs(c_n)
+def dfs(node: int) -> int:
+    global rank
     stack.append(node)
-    return
+    node_id[node] = node_rank[node] = rank
+    rank += 1
 
-
-def dfs_rev(node: int) -> None:
-    is_visited[node] = True
-    for c_n in graph_rev[node]:
-        if is_visited[c_n]:
+    for c_n in graph[node]:
+        if node_rank[c_n] == -1:
             continue
-        scc[-1].append(c_n)
-        dfs_rev(c_n)
-    return
+        if node_rank[c_n] < INF:
+            if node_rank[c_n] < node_rank[node]:
+                node_rank[node] = node_rank[c_n]
+            continue
+        node_rank[node] = min(dfs(c_n), node_rank[node])
+
+    if node_rank[node] == node_id[node]:
+        node_rank[node] = -1
+        c_scc = [node]
+        while node != (p_n := stack.pop()):
+            node_rank[p_n] = -1
+            c_scc.append(p_n)
+        
+        c_scc.sort()
+        c_scc.append(-1)
+        scc.append(c_scc)
+        return INF
+    
+    return node_rank[node]
 
 
 if __name__ == '__main__':
+    INF = sys.maxsize
     V, E = map(int, input().split())
     graph = [[] for _ in range(V+1)]
-    graph_rev = [[] for _ in range(V+1)]
     for _ in range(E):
         A,B = map(int, input().split())
         graph[A].append(B)
-        graph_rev[B].append(A)
-    
-    is_visited = [False]*(V+1)
-    stack = list()
-    for i in range(1, V+1):
-        if is_visited[i]:
-            continue
-        dfs(i)
 
     scc = list()
-    is_visited = [False]*(V+1)
-    for i in range(len(stack)-1, -1, -1):
-        if is_visited[stack[i]]:
+    node_rank = [INF]*(V+1)
+    node_id = [INF]*(V+1)
+    rank = 0
+    for i in range(1, V+1):
+        if node_rank[i] < INF:
             continue
-        scc.append([stack[i]])
-        dfs_rev(stack[i])
-        scc[-1].sort()
-        scc[-1].append(-1)
+        stack = list()
+        dfs(i)
+
     scc.sort()
     print(len(scc))
-    print('\n'.join(' '.join(map(str, scc_elem)) for scc_elem in scc))
+    print('\n'.join(' '.join(map(str, c_scc)) for c_scc in scc))
