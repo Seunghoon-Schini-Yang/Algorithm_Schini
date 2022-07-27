@@ -12,7 +12,7 @@ def dfs(node: int) -> int:
 
     for c_n in graph[node]:
         if finished[c_n]:
-            dd_scc[node].append(c_n)
+            scc_indgr[c_n] += 1
             continue
             
         if rank[c_n] < INF:
@@ -22,7 +22,7 @@ def dfs(node: int) -> int:
 
         rank_cn = dfs(c_n)
         if rank_cn == INF:
-            dd_scc[node].append(c_n)
+            scc_indgr[c_n] += 1
             continue
         rank[node] = min(rank_cn, rank[node])
 
@@ -34,17 +34,6 @@ def dfs(node: int) -> int:
         return INF
 
     return rank[node]
-
-
-def dfs_scc(node: int) -> None:
-    for c_n in graph_scc[node]:
-        if id[c_n] == 2:
-            continue
-        id[c_n] = 2
-        if id[c_n] == 1:
-            continue
-        dfs_scc(c_n)
-    return
 
 
 if __name__ == '__main__':
@@ -62,24 +51,14 @@ if __name__ == '__main__':
         id = [0]*(n+1)
         rank = [INF]*(n+1)
         odr = 0
-        dd_scc = defaultdict(list)
+        scc_indgr = defaultdict(int)
 
         for i in range(1, n+1):
             if rank[i] < INF:
                 continue
             dfs(i)
 
-        graph_scc = defaultdict(list)
-        for key, val in dd_scc.items():
-            for vtx in val:
-                graph_scc[rank[key]].append(rank[vtx])
-
-        ans = 0
-        id = [0]*(n+1)
-        for scc_i in set(rank[1:]):
-            if id[scc_i]:
-                continue
-            id[scc_i] = 1
-            dfs_scc(scc_i)
-        print(sum(i for i in id if i==1))
-        
+        indgr_cnt = defaultdict(int)
+        for key, val in scc_indgr.items():
+            indgr_cnt[rank[key]] += val
+        print(sum(1 for scc_i in set(rank[1:]) if not indgr_cnt[scc_i]))
