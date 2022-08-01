@@ -66,10 +66,10 @@ if __name__ == '__main__':
     
     scc = defaultdict(list)
     graph_s = defaultdict(list)
-    finished = defaultdict(bool)
+    finished = [False]*(2*N+1)
     finished[0] = True
-    id = defaultdict(int)
-    rank = defaultdict(int)
+    id = [0]*(2*N+1)
+    rank = [0]*(2*N+1)
     odr = 1
     stack = list()
 
