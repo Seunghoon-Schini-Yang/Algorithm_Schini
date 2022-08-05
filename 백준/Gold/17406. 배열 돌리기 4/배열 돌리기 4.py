@@ -8,17 +8,19 @@ def get_arr_size(arr: list) -> int:
     return min(sum(row) for row in arr)
 
 
-def backtrack(mask: int, arr: list, depth: int) -> None:
+def backtrack(arr: list, depth: int) -> None:
     global miny
     if depth == K:
         miny = min(get_arr_size(arr), miny)
         return
 
     for i in range(K):
-        if mask&(1<<i):
+        if visited[i]:
             continue
+        visited[i] = True
         rotated_arr = rotate(deepcopy(arr), *cals[i])
-        backtrack(mask|(1<<i), rotated_arr, depth+1)
+        backtrack(rotated_arr, depth+1)
+        visited[i] = False
     return
 
 
@@ -48,6 +50,8 @@ if __name__ == '__main__':
     N,M,K = map(int, input().split())
     arr = [list(map(int, input().split())) for _ in range(N)]
     cals = [tuple(map(int, input().split())) for _ in range(K)]
+    visited = [False]*(K)
     miny = 5000
-    backtrack(0, deepcopy(arr), 0)
+    backtrack(deepcopy(arr), 0)
     print(miny)
+
