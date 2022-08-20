@@ -1,6 +1,3 @@
-from copy import deepcopy
-
-
 def solution(key, lock):
     def rotate():
         rotated = [[0]*n for _ in range(m)]
