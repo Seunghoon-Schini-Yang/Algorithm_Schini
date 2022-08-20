@@ -1,14 +1,11 @@
 def solution(n: int, money: list):
+    memo = [0]*(n+1)
+    memo[0] = 1
     money.sort()
-    m_n = len(money)
-    memo = [[0]*(n+1) for _ in range(m_n)]
-    for ci in range(m_n):
-        memo[ci][0] = 1
 
-    for i in range(money[0], n+1):
-        memo[0][i] = memo[0][i-money[0]]
-        for ci in range(1, m_n):
-            memo[ci][i] = memo[ci-1][i] + (0 if i < money[ci] else memo[ci][i-money[ci]])
+    for coin in money:
+        for i in range(coin, n+1):
+            memo[i] += memo[i-coin]
 
-    return memo[-1][-1]
+    return memo[-1]
     
