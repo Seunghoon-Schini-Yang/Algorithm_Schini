@@ -2,26 +2,19 @@ import sys
 input = sys.stdin.readline
 
 
-def testcase() -> int:
-    def update_segtree(idx: int) -> None:
-        while idx:
-            segtree[idx] += 1
-            idx >>= 1
+def testcase() -> str:
+    def update_ftree(y: int) -> None:
+        while y <= rank:
+            ftree[y] += 1
+            y += (y & -y)
         return
 
 
-    def get_segtree(e: int) -> int:
+    def get_ftree(y: int) -> int:
         p_sum = 0
-        s = tree_len
-        while s < e:
-            if s & 1:
-                p_sum += segtree[s]
-                s += 1
-            s >>= 1
-            if e & 1:
-                e ^= 1
-                p_sum += segtree[e]
-            e >>= 1
+        while y:
+            p_sum += ftree[y]
+            y ^= (y & -y)
         return p_sum
 
 
@@ -32,19 +25,19 @@ def testcase() -> int:
 
     # coordinate compression
     temp = xys[0][1]
-    rank = xys[0][1] = 0
+    xys[0][1] = 1
+    rank = 1
     for i in range(1, n):
         if xys[i][1] != temp:
             temp = xys[i][1]
             rank += 1
         xys[i][1] = rank
 
-    # segment tree
-    tree_len = rank+1
-    segtree = [0] * (tree_len*2)
+    # fenwik tree
+    ftree = [0] * (rank+1)
     for _, y in sorted(xys, key=lambda x: (-x[0], x[1])):
-        answer += get_segtree(y+tree_len+1)
-        update_segtree(y+tree_len)
+        answer += get_ftree(y)
+        update_ftree(y)
 
     return str(answer)
 
