@@ -2,6 +2,17 @@ import sys
 input = sys.stdin.readline
 
 
+def compress(is_y: int) -> int:
+    temp = xys[0][is_y]
+    xys[0][is_y] = rank = 1
+    for i in range(1, N):
+        if xys[i][is_y] != temp:
+            temp = xys[i][is_y]
+            rank += 1
+        xys[i][is_y] = rank
+    return rank
+
+
 def query(tree: list, y: int) -> int:
     psum = 0
     while y:
@@ -31,22 +42,10 @@ if __name__ == '__main__':
 
     # coordinate compression
     xys.sort(key=lambda x: -x[1])
-    temp = xys[0][1]
-    xys[0][1] = yrank = 1
-    for i in range(1, N):
-        if xys[i][1] != temp:
-            temp = xys[i][1]
-            yrank += 1
-        xys[i][1] = yrank
+    yrank = compress(1)
 
     xys.sort(key=lambda x: (x[0], -x[1]))
-    temp = xys[0][0]
-    xys[0][0] = xrank = 1
-    for i in range(1, N):
-        if xys[i][0] != temp:
-            temp = xys[i][0]
-            xrank += 1
-        xys[i][0] = xrank
+    compress(0)
 
     # fenwik tree
     rftree = [0]*(yrank+1)
