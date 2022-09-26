@@ -17,8 +17,7 @@ def solution(info: list, edges: list) -> int:
         for cn in an_list:
             nan_list = an_list.copy()
             nan_list.remove(cn)
-            for ccn in graph[cn]:
-                nan_list.add(ccn)
+            nan_list |= graph[cn]
             dfs(cn, sheep, wolf, nan_list)
         return
 
