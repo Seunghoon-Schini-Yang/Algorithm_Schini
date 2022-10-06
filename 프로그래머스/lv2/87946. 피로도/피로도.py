@@ -3,7 +3,7 @@ cnt = 0
 
 
 def solution(k: int, dungeons: list) -> int:
-    def dfs(k: int, mask: int, depth: int) -> int:
+    def dfs(k: int, mask: int, depth: int) -> None:
         global cnt
         cnt = max(cnt, depth)
 
