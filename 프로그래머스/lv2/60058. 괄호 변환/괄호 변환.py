@@ -11,20 +11,15 @@ def solution(p):
     
     def get_uv(s):
         lc = rc = 0
-        if s[0] == '(':
-            lc += 1
-        else:
-            rc += 1
-
-        for i in range(1, len(s)):
+        for i in range(len(s)):
             if s[i] == '(':
                 lc += 1
             else:
                 rc += 1
-            
+
             if lc == rc:
                 break
-
+            
         return s[:i+1], s[i+1:]
     
 
