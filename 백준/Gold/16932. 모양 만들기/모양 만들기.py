@@ -43,18 +43,15 @@ def main():
     answer = 0
     for row in range(N):
         for col in range(M):
-            if not memo[row][col]:
+            if memo[row][col]:
                 continue
-            grp = memo[row][col]
+            
+            cands = set()
             for r, c in adjs(row, col):
-                if memo[r][c]:
+                if not memo[r][c]:
                     continue
-                cands = {grp}
-                for cr, cc in adjs(r, c):
-                    if not memo[cr][cc] or memo[cr][cc] == grp:
-                        continue
-                    cands.add(memo[cr][cc])
-                answer = max(answer, 1 + sum(sizes[cand] for cand in cands))
+                cands.add(memo[r][c])
+            answer = max(answer, 1 + sum(sizes[cand] for cand in cands))
     
     print(answer)
     return
