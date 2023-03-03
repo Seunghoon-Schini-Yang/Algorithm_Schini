@@ -10,7 +10,7 @@ def solution(n: int) -> None:
     for _ in range(n):
         if (num := int(input())):
             if num < 0:
-                dd.update({(num := -num): dd.get(num, 0)+1})
+                dd[num] = dd.get((num := -num), 0) + 1
             heapq.heappush(prior_q, num)
         else:
             if prior_q:
