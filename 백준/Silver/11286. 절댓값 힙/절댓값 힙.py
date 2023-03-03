@@ -1,9 +1,9 @@
-import heapq
+from heapq import heappush, heappop
 import sys
 input = sys.stdin.readline
 
 
-def solution(n: int) -> None:
+def solution(n: int) -> str:
     answer = []
     prior_q = []
     dd = {}
@@ -11,10 +11,10 @@ def solution(n: int) -> None:
         if (num := int(input())):
             if num < 0:
                 dd[num] = dd.get((num := -num), 0) + 1
-            heapq.heappush(prior_q, num)
+            heappush(prior_q, num)
         else:
             if prior_q:
-                if dd.get((num := heapq.heappop(prior_q)), 0):
+                if dd.get((num := heappop(prior_q)), 0):
                     answer.append(-num)
                     dd[num] -= 1
                 else:
