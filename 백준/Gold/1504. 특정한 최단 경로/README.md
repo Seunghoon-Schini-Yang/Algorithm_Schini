@@ -8,7 +8,7 @@
 
 ### 분류
 
-다익스트라(dijkstra), 그래프 이론(graphs)
+Graph Theory, Dijkstra's
 
 ### 문제 설명
 
