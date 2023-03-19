@@ -10,7 +10,7 @@ def recursive(seq):
         print(seq)
         exit()
     
-    for i in ('1', '2', '3'):
+    for i in '123':
         sseq = seq + i
         n = len(sseq)
         for j in range(1, (n>>1)+1):
