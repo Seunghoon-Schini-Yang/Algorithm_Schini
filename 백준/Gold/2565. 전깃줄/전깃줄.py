@@ -1,34 +1,25 @@
 import sys
 input = sys.stdin.readline
+from bisect import bisect_left
 
 
-def std_input(n: int) -> int:
-    cord_list = [tuple(map(int, input().split())) for _ in range(n)]
-    return solution(n, cord_list)
-
-
-def solution(n: int, arr: list) -> int:
-    arr.sort()
-    dp = [arr[0][1]]
-
-    for i in range(1, n):
-        if arr[i][1] > dp[-1]:
-            dp.append(arr[i][1])
+def main():
+    N = int(input())
+    answer = []
+    cords = [0] * 501
+    for _ in range(N):
+        s, e = map(int, input().split())
+        cords[e] = s
+    for cord in cords:
+        if not cord:
+            continue
+        idx = bisect_left(answer, cord)
+        if idx == len(answer):
+            answer.append(cord)
         else:
-            dp[binary_search(0, len(dp) - 1, arr[i][1], dp)] = arr[i][1]
-    
-    return n - len(dp)
+            answer[idx] = cord
+    print(N - len(answer))
 
 
-def binary_search(l: int, r: int, arr_i: int, seq: list) -> int:
-    while l <= r:
-        m = (l + r) // 2
-
-        if arr_i < seq[m]:
-            r = m - 1
-        else:
-            l = m + 1
-    return l
-
-
-print(std_input(int(input())))
+if __name__ == '__main__':
+    main()
