@@ -4,10 +4,6 @@ from bisect import bisect_left
 
 
 def main(N, arr):
-    if N == 1:
-        print(1)
-        return
-    
     inc = [0] * N; dec = inc[:]
     imemo = []; dmemo = []
     for i in range(N):
