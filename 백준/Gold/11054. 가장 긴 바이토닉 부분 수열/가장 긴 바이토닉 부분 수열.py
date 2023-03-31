@@ -1,37 +1,35 @@
 import sys
 input = sys.stdin.readline
+from bisect import bisect_left
 
-def solution(n: int, arr: list) -> int:
-    inc_dp, dec_dp = [1] * n, [1] * n
-    inc_seq, dec_seq = [arr[0]], [arr[-1]]
 
-    for i, j in enumerate(range(-2, -n-1, -1), start=1):
-        if arr[i] > inc_seq[-1]:
-            inc_seq.append(arr[i])
-        else:
-            inc_seq[binary_search(0, len(inc_seq) - 1, arr[i], inc_seq)] = arr[i]
-
-        if arr[j] > dec_seq[-1]:
-            dec_seq.append(arr[j])
-        else:
-            dec_seq[binary_search(0, len(dec_seq) - 1, arr[j], dec_seq)] = arr[j]
-
-        inc_dp[i], dec_dp[i] = len(inc_seq), len(dec_seq)
+def main(N, arr):
+    if N == 1:
+        print(1)
+        return
     
-    maxi = max(inc_dp[i] + dec_dp[n - 1 - i] - 1 for i in range(n))
-
-    return maxi
-
-
-def binary_search(l: int, r: int, arr_i: int, seq: list) -> int:
-    while l <= r:
-        m = (l + r) // 2
-
-        if arr_i <= seq[m]:
-            r = m - 1
+    inc = [0] * N; dec = inc[:]
+    imemo = []; dmemo = []
+    for i in range(N):
+        if (ii := bisect_left(imemo, arr[i])) == len(imemo):
+            imemo.append(arr[i])
         else:
-            l = m + 1
-    return l
+            imemo[ii] = arr[i]
+        inc[i] = ii
+        if (di := bisect_left(dmemo, arr[~i])) == len(dmemo):
+            dmemo.append(arr[~i])
+        else:
+            dmemo[di] = arr[~i]
+        dec[i] = di
     
+    for i in range(1, N):
+        if inc[i] < inc[i-1]:
+            inc[i] = inc[i-1]
+        if dec[i] < dec[i-1]:
+            dec[i] = dec[i-1]
 
-print(solution(int(input()), list(map(int, input().split()))))
+    print( max(inc[i] + dec[N-1-i] for i in range(N)) + 1 )
+
+
+if __name__ == '__main__':
+    main(int(input()), list(map(int, input().split())))
