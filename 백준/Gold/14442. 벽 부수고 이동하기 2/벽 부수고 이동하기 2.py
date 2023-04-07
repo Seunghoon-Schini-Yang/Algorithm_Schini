@@ -12,6 +12,8 @@ def main() -> int:
         cnt += 1
         tmp = []
         for r, c, k in que:
+            if kemo[r][c] < k:
+                continue
             if (r, c) == (N-1, M-1):
                 return cnt
             for rr, cc in adjs(r, c):
