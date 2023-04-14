@@ -1,7 +1,7 @@
 def main():
     _sum = 0
     angles = set()
-    for i in range(3):
+    for _ in range(3):
         _sum += (angle := int(input()))
         angles.add(angle)
     if _sum != 180:
