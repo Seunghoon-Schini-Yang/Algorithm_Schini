@@ -1,3 +1,7 @@
+import sys
+input = sys.stdin.readline
+
+
 n = int(input())
 current = set()
 for _ in range(n):
