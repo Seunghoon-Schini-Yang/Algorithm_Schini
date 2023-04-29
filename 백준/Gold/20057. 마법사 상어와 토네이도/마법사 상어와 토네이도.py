@@ -5,15 +5,15 @@ input = sys.stdin.readline
 def scatter(d, r, c):
     dr, dc = drr[d], dcc[d]
     sand = board[r][c]
-    update(r+(2*dr), c+(2*dc), board[r][c]//20)
-    update(r+dr+dc, c+dc+dr, board[r][c]//10)
-    update(r+dr-dc, c+dc-dr, board[r][c]//10)
-    update(r+(2*dc), c+(2*dr), board[r][c]//50)
-    update(r-(2*dc), c-(2*dr), board[r][c]//50)
-    update(r+dc, c+dr, board[r][c]*7//100)
-    update(r-dc, c-dr, board[r][c]*7//100)
-    update(r-dr+dc, c-dc+dr, board[r][c]//100)
-    update(r-dr-dc, c-dc-dr, board[r][c]//100)
+    update(r+(2*dr), c+(2*dc), sand//20)
+    update(r+dr+dc, c+dc+dr, sand//10)
+    update(r+dr-dc, c+dc-dr, sand//10)
+    update(r+(2*dc), c+(2*dr), sand//50)
+    update(r-(2*dc), c-(2*dr), sand//50)
+    update(r+dc, c+dr, sand*7//100)
+    update(r-dc, c-dr, sand*7//100)
+    update(r-dr+dc, c-dc+dr, sand//100)
+    update(r-dr-dc, c-dc-dr, sand//100)
     sand -= sand//20 + (sand//10 + sand//50 + sand//100 + sand*7//100)*2
     update(r+dr, c+dc, sand)
     board[r][c] = 0
