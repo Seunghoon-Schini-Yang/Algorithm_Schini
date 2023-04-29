@@ -4,11 +4,6 @@ import sys
 
 
 def solution(clockHands):
-    def rotate(r, c, dgr):
-        
-        return
-    
-    
     answer = sys.maxsize
     n = len(clockHands)
     dr, dc = [1, 0, -1, 0, 0], [0, 1, 0, -1, 0]
