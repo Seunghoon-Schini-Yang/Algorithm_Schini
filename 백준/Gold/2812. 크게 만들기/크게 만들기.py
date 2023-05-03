@@ -7,11 +7,10 @@ if __name__ == '__main__':
     arr = map(lambda x: -int(x), input().rstrip())
     stack = []
     
-    for i in range(N, 0, -1):
-        cur = next(arr)
-        cut = max(thres-i, 0)
+    for i, cur in zip(range(N, 0, -1), arr):
         idx = bisect_right(stack, cur)
-        idx = cut if idx < cut else idx
+        if idx < (cut := thres-i):
+            idx = cut
         if idx == len(stack):
             stack.append(cur)
         else:
