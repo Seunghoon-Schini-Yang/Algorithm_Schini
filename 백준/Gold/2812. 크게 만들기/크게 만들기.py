@@ -9,8 +9,8 @@ if __name__ == '__main__':
     
     for i, cur in zip(range(N, 0, -1), arr):
         idx = bisect_right(stack, cur)
-        if idx < (cut := thres-i):
-            idx = cut
+        if idx < thres-i:
+            idx = thres-i
         if idx == len(stack):
             stack.append(cur)
         else:
