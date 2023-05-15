@@ -18,6 +18,5 @@ if __name__ == '__main__':
         for i in range(1, M):
             l[i] = max(prev[i], l[i-1]) + cur[i]
             r[~i] = max(prev[~i], r[~(i-1)]) + cur[~i]
-        cur = [max(ll, rr) for ll, rr in zip(l, r)]
-        prev = cur
+        prev = [max(ll, rr) for ll, rr in zip(l, r)]
     print(prev[-1])
