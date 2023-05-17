@@ -1,5 +1,6 @@
 import sys
 input = sys.stdin.readline
+print = sys.stdout.write
 from heapq import heapify, heappush, heappop
 
 
@@ -9,7 +10,7 @@ def _pop():
         dgr[c] -= 1
         if not dgr[c]:
             heappush(pq, c)
-    return p
+    return str(p)
 
 
 if __name__ == '__main__':
@@ -23,4 +24,4 @@ if __name__ == '__main__':
     
     pq = [i for i in range(1, N+1) if not dgr[i]]
     heapify(pq)
-    print(*[_pop() for _ in range(N)])
+    print(' '.join(_pop() for _ in range(N)))
