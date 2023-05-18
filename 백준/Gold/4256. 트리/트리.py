@@ -1,5 +1,6 @@
 import sys
 input = sys.stdin.readline
+print = sys.stdout.write
 
 
 def get_post(ps, pe, os, oe):
@@ -15,3 +16,4 @@ if __name__ == '__main__':
         pre = input().split()
         ino = {v: i for i, v in enumerate(input().split())}
         print(get_post(0, n-1, 0, n-1))
+        print('\n')
