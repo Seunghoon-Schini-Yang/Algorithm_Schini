@@ -1,47 +1,42 @@
+# https://velog.io/@ashooozzz/Python-%ED%8C%8C%EC%9D%B4%EC%8D%AC-KMP-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-%EA%B5%AC%ED%98%84BOJ-1786.-%EC%B0%BE%EA%B8%B0 참고
 import sys
 input = sys.stdin.readline
 
 
-def sol(t: str, p: str) -> None:
-    p_len = len(p); t_len = len(t)
-    if p_len > t_len:
-        print(0)
-        return
-    lps = [0] * p_len
-    cnt = 0; idx = list()
+if __name__ == '__main__':
+    t = input().rstrip()
+    p = input().rstrip()
 
-    # find LPS in p
-    i = 1; j = 0
-    while i < p_len:
-        if p[i] == p[j]:
-            j += 1
+    lt, lp = len(t), len(p)
+    lps = [0] * lp
+    length = 0
+    i = 1
+    while i < len(p):
+        if p[length] == p[i]:
+            length += 1
+            lps[i] = length
             i += 1
         else:
-            if not j:
+            if length == 0:
+                lps[i] = 0
                 i += 1
             else:
-                lps[i-1] = j
-                j = lps[j-1]
-    if j > 0:
-        lps[i-1] = j
-
-    # find p in t
-    i = j = 0
-    while i < t_len:
-        if p[j] != t[i]:
-            if not j:
-                i += 1
-            else:
+                length = lps[length - 1]
+    
+    i, j = 0, 0
+    idxs = []
+    while i < lt:
+        if t[i] == p[j]:
+            i += 1
+            j += 1
+            if j == lp:
+                idxs.append(i-lp+1)
                 j = lps[j-1]
         else:
-            i += 1; j += 1
-            if j == p_len:
-                cnt += 1
-                idx.append(i-p_len+1)
+            if j != 0:
                 j = lps[j-1]
+            else:
+                i += 1
 
-    print(len(idx))
-    sys.stdout.write(' '.join(map(str, idx)))
-
-
-sol(input().rstrip(), input().rstrip())
+    print(len(idxs))
+    print(*idxs)
