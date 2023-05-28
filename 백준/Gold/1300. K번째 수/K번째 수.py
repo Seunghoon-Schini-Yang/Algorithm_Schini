@@ -2,7 +2,7 @@ def solution():
     n, k = int(input()), int(input())
     start, end = 1, n*n
     while start <= end:
-        mid = (start + end) // 2
+        mid = (start+end)>>1
         base = mid//n
         cnt = base * n
         for i in range(base+1, min(n, mid)+1):
