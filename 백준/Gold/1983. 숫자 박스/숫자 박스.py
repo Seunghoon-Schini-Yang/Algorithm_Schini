@@ -1,3 +1,4 @@
+# https://schini.tistory.com/entry/%EC%88%AB%EC%9E%90-%EB%B0%95%EC%8A%A4-1983%EB%B2%88-%EB%B0%B1%EC%A4%80-BOJ
 import sys
 input = sys.stdin.readline
 
