@@ -1,38 +1,29 @@
 import sys
 input = sys.stdin.readline
-import heapq
+from heapq import heappush, heappop
 
-def solution(n: int) -> str:
-    max_heap, min_heap = list(), [int(input())]
-    ans = [0] * n
-    ans[0] = str(min_heap[0])
 
-    heapq.heapify(max_heap)
-    heapq.heapify(min_heap)
-
-    max_len, min_len = 0, 1
-    for i in range(1, n):
-        num = int(input())
-
-        if min_heap[0] < num:
-            heapq.heappush(min_heap, num)
-            min_len += 1
+def get_m(x):
+    global ll
+    if not ll:
+        if x <= r[0]:
+            heappush(l, -x)
         else:
-            heapq.heappush(max_heap, -num)
-            max_len += 1
-        
-        if max_len < min_len:
-            heapq.heappush(max_heap, -heapq.heappop(min_heap))
-            max_len += 1
-            min_len -= 1
-        elif max_len > min_len + 1:
-            heapq.heappush(min_heap, -heapq.heappop(max_heap))
-            max_len -= 1
-            min_len += 1
+            heappush(l, -heappop(r))
+            heappush(r, x)
+    else:
+        if -l[0] <= x:
+            heappush(r, x)
+        else:
+            heappush(r, -heappop(l))
+            heappush(l, -x)
+    ll ^= 1
+    return str(-l[0])
 
-        ans[i] = str(-max_heap[0])
-    
-    return '\n'.join(ans)
 
-            
-print(solution(int(input())))
+if __name__ == '__main__':
+    N = int(input())
+    l, r = [-int(input())], []
+    ll = 1
+    print(-l[0])
+    print('\n'.join(get_m(int(input())) for _ in range(N-1)))
