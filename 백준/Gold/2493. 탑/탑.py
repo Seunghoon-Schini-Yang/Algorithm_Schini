@@ -1,3 +1,7 @@
+import sys
+input = sys.stdin.readline
+
+
 if __name__ == '__main__':
     N = int(input())
     stack = [(0, 100_000_001)]
