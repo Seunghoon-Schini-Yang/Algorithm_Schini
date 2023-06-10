@@ -9,6 +9,11 @@ if __name__ == '__main__':
     for i, h in enumerate(map(int, input().split())):
         while stack[-1][1] < h:
             stack.pop()
-        rs[i] = stack[-1][0]
+        if stack[-1][1] == h:
+            rs[i] = stack[-1][0]
+            while stack[-1][1] == h:
+                stack.pop()
+        else:
+            rs[i] = stack[-1][0]
         stack.append((i+1, h))
     print(*rs)
