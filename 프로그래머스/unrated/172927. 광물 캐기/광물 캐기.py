@@ -1,26 +1,25 @@
-def bfs():
-    return
-
-
 def solution(picks, minerals):
+    cost = [[1, 1, 1], [5, 1, 1], [25, 5, 1]]
+    n = min(sum(picks), ((len(minerals)-1)//5)+1)
     mapping = {"diamond": 0, "iron": 1, "stone": 2}
     minerals = [mapping[i] for i in minerals]
-    cost = [[1, 1, 1], [5, 1, 1], [25, 5, 1]]
-    q = {0: [picks, 0]}
-    for i in range(0, min(sum(picks)*5, len(minerals)), 5):
+    minerals = [[sum(cost[k][x] for x in minerals[i:i+5]) for k in range(3)] for i in range(0, n*5, 5)]
+    q = {'000': 0}
+    for i in range(n):
         tmp = {}
-        for mask, (res, fat) in q.items():
+        for mask, fat in q.items():
+            mask = list(map(int, mask))
             for k in range(3):
-                if not res[k]:
+                if mask[k] == picks[k]:
                     continue
-                cres = res.copy()
-                cres[k] -= 1
-                cm = mask + 6**k
-                cf = fat + sum(cost[k][minerals[x]] for x in range(i, min(i+5, len(minerals))))
+                mask[k] += 1
+                cm = ''.join(map(str, mask))
+                cf = fat + minerals[i][k]
                 if cm in tmp:
-                    tmp[cm][1] = min(tmp[cm][1], cf)
+                    tmp[cm] = min(tmp[cm], cf)
                 else:
-                    tmp[cm] = [cres, cf]
+                    tmp[cm] = cf
+                mask[k] -= 1
         q = tmp       
-
-    return min(x for _, x in q.values())
+    print(q)
+    return min(q.values())
