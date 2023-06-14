@@ -1,12 +1,12 @@
 import sys
 input = sys.stdin.readline
-from collections import deque, defaultdict
+from collections import deque
 
 
 if __name__ == '__main__':
     N, K = map(int, input().split())
     q = deque()
-    rem = defaultdict(int)
+    rem = [0] * 21
     pairs = 0
     for _ in range(K):
         x = len(input().rstrip())
