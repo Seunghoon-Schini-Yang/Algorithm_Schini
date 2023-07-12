@@ -1,15 +1,15 @@
 class ResSum():
     def __init__(self):
-        self.N, self.M = map(int, input().split())
-        self.arr = list(map(int, input().split()))
-        self.get_num_of_intervals()
+        _, M = map(int, input().split())
+        arr = list(map(int, input().split()))
+        self.get_num_of_intervals(M, arr)
         
     
-    def get_num_of_intervals(self):
-        memo = [0] * self.M
+    def get_num_of_intervals(self, M, arr):
+        memo = [0] * M
         acc = 0
-        for i in self.arr:
-            acc = (acc + i) % self.M
+        for i in arr:
+            acc = (acc + i) % M
             memo[acc] += 1
         cnt = memo[0] + sum(map(lambda i: i*(i-1)//2, memo))
         self.cnt = cnt
