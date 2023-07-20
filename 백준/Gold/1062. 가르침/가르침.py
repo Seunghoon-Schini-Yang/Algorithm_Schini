@@ -14,22 +14,22 @@ class Teach():
             self.memo = [False] * 26
             for c in 'acint':
                 self.memo[self.atoi[c]] = True
-            words = [self._word_to_idx(input().rstrip()) for _ in range(N)]
+            words = [self._word_to_idx(input().rstrip()[4:-4]) for _ in range(N)]
             self.answer = self._teach_words(words, K)
 
         
     def _word_to_idx(self, word):
-        return set(self.atoi[c] for c in word if not self.memo[self.atoi[c]])
+        mask = 0
+        for i in set(self.atoi[c] for c in word if not self.memo[self.atoi[c]]):
+            mask |= 1<<i
+        return mask
     
 
     def _teach_words(self, words, K):
         answer = 0
-        for seq in comb((i for i in range(26) if not self.memo[i]), K-5):
-            for i in seq:
-                self.memo[i] = True
-            answer = max(answer, sum(all(self.memo[i] for i in word) for word in words))
-            for i in seq:
-                self.memo[i] = False
+        for seq in comb((1<<i for i in range(26) if not self.memo[i]), K-5):
+            mask = sum(seq)
+            answer = max(answer, sum(mask&word == word for word in words))
         return answer
 
 
