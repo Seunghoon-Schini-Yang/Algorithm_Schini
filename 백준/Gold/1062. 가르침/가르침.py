@@ -1,6 +1,5 @@
 import sys
 input = sys.stdin.readline
-from string import ascii_lowercase
 from itertools import combinations as comb
 
 
@@ -10,24 +9,23 @@ class Teach():
         if K == 26:
             self.answer = N
         elif 5 <= K:
-            self.atoi = {c: i for i, c in enumerate(ascii_lowercase)}
-            self.memo = [False] * 26
-            for c in 'acint':
-                self.memo[self.atoi[c]] = True
-            words = [self._word_to_idx(input().rstrip()[4:-4]) for _ in range(N)]
-            self.answer = self._teach_words(words, K)
-
-        
-    def _word_to_idx(self, word):
-        mask = 0
-        for i in set(self.atoi[c] for c in word if not self.memo[self.atoi[c]]):
-            mask |= 1<<i
-        return mask
+            base = set('acint')
+            words = [{c for c in input().rstrip()[4:-4] if c not in base} for _ in range(N)]
+            all_chars = set()
+            for word in words:
+                all_chars = all_chars.union(word)
+            self.tot_len = len(all_chars)
+            if self.tot_len <= K-5:
+                self.answer = N
+            else:
+                atoi = {c: i for i, c in enumerate(all_chars)}
+                words = [sum(1<<atoi[c] for c in word) for word in words]
+                self.answer = self._teach_words(words, K)
     
 
     def _teach_words(self, words, K):
         answer = 0
-        for seq in comb((1<<i for i in range(26) if not self.memo[i]), K-5):
+        for seq in comb((1<<i for i in range(self.tot_len)), K-5):
             mask = sum(seq)
             answer = max(answer, sum(mask&word == word for word in words))
         return answer
