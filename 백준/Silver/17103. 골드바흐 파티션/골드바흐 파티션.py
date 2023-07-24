@@ -16,11 +16,12 @@ class Goldbach():
         prime_set = set(primes)
         for i in range(T):
             limit = Ns[i]>>1
-            cnt = j = 0
-            while primes[j] <= limit:
+            cnt = 0
+            for j in range(len(primes)):
+                if primes[j] > limit:
+                    break
                 if Ns[i] - primes[j] in prime_set:
                     cnt += 1
-                j += 1
             Ns[i] = cnt
         self.answer = Ns
             
