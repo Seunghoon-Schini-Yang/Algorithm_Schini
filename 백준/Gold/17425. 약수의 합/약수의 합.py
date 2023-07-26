@@ -1,6 +1,5 @@
 import sys
 input = sys.stdin.readline
-from itertools import accumulate
 
 
 class Divisor():
@@ -13,7 +12,8 @@ class Divisor():
         for s in range(2, (maxy>>1)+1):
             for d in range(s<<1, maxy+1, s):
                 acc[d] += s
-        acc = list(accumulate(acc))
+        for i in range(2, maxy+1):
+            acc[i] += acc[i-1]
         self.answer = '\n'.join(map(str, [acc[v] for v in arr]))
 
 
