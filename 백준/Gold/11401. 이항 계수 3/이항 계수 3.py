@@ -16,12 +16,10 @@ class BiCoeffcient():
         
         mul = (fac_k * fac_nk) % mod
         cur = 1
-        k = mod-2
-        while k:
-            if k&1:
+        for i in map(int, bin(1_000_000_005)[-1:1:-1]):
+            if i:
                 cur = (cur * mul) % mod
             mul = (mul * mul) % mod
-            k >>= 1
         self.answer = (fac_n * cur) % mod
 
 
