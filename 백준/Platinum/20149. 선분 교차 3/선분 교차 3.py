@@ -75,10 +75,4 @@ if __name__ == '__main__':
     is_cross, x, y = lines.answer
     print(is_cross)
     if is_cross and x != None:
-        x = round(x, 9)
-        y = round(y, 9)
-        if x == int(x):
-            x = int(x)
-        if y == int(y):
-            y = int(y)
         print(x, y)
