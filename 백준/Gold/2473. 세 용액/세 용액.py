@@ -2,8 +2,6 @@ def _search(N, arr):
     maxy = 3_000_000_000
     answer = [0, 0, 0]
     for i in range(N-2):
-        if 0 <= arr[i]:
-            break
         s, e = i+1, N-1
         while s < e:
             cur = arr[i] + arr[s] + arr[e]
@@ -19,6 +17,8 @@ def _search(N, arr):
                 s += 1
             else:
                 return [arr[i], arr[s], arr[e]]
+        if 0 <= arr[i]:
+            break
     return answer
 
 
