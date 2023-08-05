@@ -3,7 +3,7 @@ class Luna():
         if N <= M:
             self.answer = N
         else:
-            s, e = 0, 60_000_000_000
+            s, e = 0, max(arr) * N
             while s < e:
                 m = (s+e)>>1
                 cur = sum(m//v for v in arr) + M
