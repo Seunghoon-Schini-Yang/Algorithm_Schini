@@ -1,26 +1,44 @@
-def put(word, trie):
-    for char in word:
-        trie['cnt'] = trie.get('cnt', 0) + 1
-        trie[char] = trie.get(char, {})
-        trie = trie[char]
-
-
-def count(word, trie):
-    for char in word:
+def put(idx, word, trie):
+    l = len(word)
+    cur = trie
+    for i, char in enumerate(word):
         if char == '?':
-            return trie.get('cnt', 0)
-        trie = trie.get(char, False)
-        if not trie:
-            return 0
+            cur[0] = cur.get(0, {})
+            cur = cur[0]
+            cur[l-i] = cur.get(l-i, [])
+            cur[l-i].append(idx)
+            break
+        cur[char] = cur.get(char, {})
+        cur = cur[char]
 
 
+def count(word, trie, table):
+    l = len(word)
+    cur = trie
+    for i, char in enumerate(word):
+        if cur.get(0, False):
+            if l-i in cur[0]:
+                for idx in cur[0][l-i]:
+                    table[idx] += 1
+        cur = cur.get(char, False)
+        if not cur:
+            break
+
+    
 def solution(words, queries):
-    front, back = [{} for _ in range(10001)], [{} for _ in range(10001)]
+    front, back = {}, {}
+    only_marks = []
+    for i, q in enumerate(queries):
+        if q[0] == '?':
+            put(i, q[::-1], back)
+        else:
+            put(i, q, front)
+        if q[0] == q[-1] == '?':
+            only_marks.append(i)
+    queries = [0] * len(queries)
     for word in words:
-        l = len(word)
-        put(word[::-1], back[l])
-        put(word, front[l])
-    for i, word in enumerate(queries):
-        l = len(word)
-        queries[i] = count(word[::-1], back[l]) if word[0] == '?' else count(word, front[l])
+        count(word, front, queries)
+        count(word[::-1], back, queries)
+    for i in only_marks:
+        queries[i] >>= 1
     return queries

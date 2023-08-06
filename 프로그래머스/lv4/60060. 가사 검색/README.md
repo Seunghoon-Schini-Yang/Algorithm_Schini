@@ -1,6 +1,6 @@
 # [level 4] 가사 검색 - 60060 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/60060#qna) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/60060) 
 
 ### 성능 요약
 
