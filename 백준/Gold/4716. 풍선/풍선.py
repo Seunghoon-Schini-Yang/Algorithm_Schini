@@ -27,7 +27,7 @@ class Teams():
                 count += Room.balloons * self.teams[-1][idx]
                 Room.balloons = 0
                 break
-        return Room, count
+        return count
 
     
 if __name__ == '__main__':
@@ -45,10 +45,10 @@ if __name__ == '__main__':
                 b_team.teams.append([K, Da, Db])
         a_team._sort()
         b_team._sort()
-        a, count = a_team._deliver(a, 2, 0)
-        b, count = b_team._deliver(b, 2, count)
+        count = a_team._deliver(a, 2, 0)
+        count = b_team._deliver(b, 2, count)
         if a_team.teams:
-            _, count = a_team._deliver(b, 1, count)
+            count = a_team._deliver(b, 1, count)
         elif b_team.teams:
-            _, count = b_team._deliver(a, 1, count)
+            count = b_team._deliver(a, 1, count)
         print(count)
