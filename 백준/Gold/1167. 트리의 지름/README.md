@@ -1,4 +1,4 @@
-# [Gold III] 트리의 지름 - 1167 
+# [Gold II] 트리의 지름 - 1167 
 
 [문제 링크](https://www.acmicpc.net/problem/1167) 
 
@@ -8,7 +8,7 @@
 
 ### 분류
 
-깊이 우선 탐색(dfs), 그래프 이론(graphs), 그래프 탐색(graph_traversal), 트리(trees)
+깊이 우선 탐색, 그래프 이론, 그래프 탐색, 트리
 
 ### 문제 설명
 
