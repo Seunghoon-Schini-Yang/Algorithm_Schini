@@ -1,10 +1,9 @@
 if __name__ == '__main__':
     X, Y, D, T = map(int, input().split())
     cur = pow(X**2 + Y**2, 0.5)
-    D2 = D<<1
     ts = 0
     if D > T:
-        if D2 < cur:
+        if (2*D) < cur:
             step = ((cur - 2*D) // D) + 1
             cur -= step*D
             ts += step*T
