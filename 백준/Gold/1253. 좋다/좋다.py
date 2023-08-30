@@ -1,6 +1,3 @@
-from math import comb
-
-
 class Goods():
     def __init__(self, N):
         arr = sorted(map(int, input().split()))
