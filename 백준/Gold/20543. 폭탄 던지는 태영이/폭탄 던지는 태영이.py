@@ -4,15 +4,15 @@ input = sys.stdin.readline
 
 class Inha():
     def __init__(self, N, M):
-        board = [[0] * N for _ in range(M-1)] + [list(map(lambda x: -int(x), input().split())) for _ in range(N-M+1)]
-        for c in range(N):
+        board = [[0]*(N-M+1) for _ in range(M-1)] + [list(map(lambda x: -int(x), input().split()))[:(N-M+1)] for _ in range(N-M+1)]
+        for c in range(N-M+1):
             acc = 0
             for r in range(M-1, N):
                 board[r][c] -= acc
                 acc += board[r][c] - board[r-M+1][c]
         board = board[M-1:]
 
-        board = [[0]*(M-1) + row[:(N-M+1)] for row in board]
+        board = [[0]*(M-1) + row for row in board]
         for r in range(N-M+1):
             acc = 0
             for c in range(M-1, N):
