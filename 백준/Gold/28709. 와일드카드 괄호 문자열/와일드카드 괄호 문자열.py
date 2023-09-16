@@ -33,9 +33,6 @@ class Strings():
                             return 'NO'
                 shorten = []
         
-        if shorten and ((not is_wc and shorten[0] == ')') or shorten[-1] == '('):
-            return 'NO'
-
         if is_wc:
             l = r = 0
             for char in shorten[::-1]:
